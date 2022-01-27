@@ -1,4 +1,4 @@
-package com.example.huawei;
+package com.example.remindcalender.remindercalendar;
 
 import org.junit.Test;
 
