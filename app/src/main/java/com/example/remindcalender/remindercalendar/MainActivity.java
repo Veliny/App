@@ -3,7 +3,10 @@ package com.example.remindcalender.remindercalendar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         int[] days = new int[31];
         int[] months = new int[12];
         int[] years = new int[10];
+        Button addActivity = findViewById(R.id.buttonadd);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -39,13 +43,23 @@ public class MainActivity extends AppCompatActivity {
                     if (days[i] == currentDays){
                         for (int j= 0; j<12; j++){
                             if(months[j] == currentMonths){
-
-                                return;
                             }
                         }
                     }
                 }
 
+            }
+        });
+
+        addActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               calendarView.getDate();
+                Intent intent = new Intent(MainActivity.this , input.class);
+                intent.putExtra("day", currentDays );
+                intent.putExtra("month", currentMonths);
+                startActivity(intent);
             }
         });
 
