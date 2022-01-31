@@ -30,6 +30,7 @@ public class input extends AppCompatActivity {
         timeSet = arrayClass.getTimeSet();
         int date = intent.getIntExtra("day", 0);
         int month = intent.getIntExtra("month", 0);
+        int year = intent.getIntExtra("year",0);
 
         Button save = findViewById(R.id.savebtn);
 
@@ -65,7 +66,7 @@ public class input extends AppCompatActivity {
                         }, hour, minutes, true);
                 picker.show();
                 //lempar ke array kali?
-                Remind object = new Remind(date, month, hour, minutes);
+                Remind object = new Remind(date, month, year, hour, minutes);
                 arrayClass.getTimeSet().add(object);
                 Toast.makeText(input.this, "Reminder added", Toast.LENGTH_SHORT).show();
             }
