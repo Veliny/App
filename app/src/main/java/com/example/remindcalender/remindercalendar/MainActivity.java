@@ -43,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 currentDays = dayOfMonth;
 
                 for (int i = 0; i< 31; i++){
-                    if (days[i] == currentDays){
-                        for (int j= 0; j<12; j++){
-                            if(months[j] == currentMonths){
+                    if (days[i] == currentDays) {
+                        for (int j = 0; j < 12; j++) {
+                            if (months[j] == currentMonths) {
                                 //print disini
 //                                text.setText();
                                 return;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-
+                text.setText("");
             }
         });
 
