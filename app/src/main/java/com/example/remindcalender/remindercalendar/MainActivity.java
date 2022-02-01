@@ -10,10 +10,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.huawei.hmf.tasks.OnFailureListener;
+import com.huawei.hmf.tasks.OnSuccessListener;
+import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.ads.AdParam;
+import com.huawei.hms.ads.BannerAdSize;
+import com.huawei.hms.ads.HwAds;
+import com.huawei.hms.ads.banner.BannerView;
+import com.huawei.hms.common.ApiException;
+import com.huawei.hms.support.account.AccountAuthManager;
+import com.huawei.hms.support.account.request.AccountAuthParams;
+import com.huawei.hms.support.account.request.AccountAuthParamsHelper;
+import com.huawei.hms.support.account.result.AuthAccount;
+import com.huawei.hms.support.account.service.AccountAuthService;
 
 public class MainActivity extends AppCompatActivity {
     
@@ -24,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private int Monthsindex;
     private int Yearsindex;
     arrayClass arr = new arrayClass();
+//    private static final String TAG = "Account";
+//    private AccountAuthParams mAuthParam;
+//    private AccountAuthService mAuthService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +51,48 @@ public class MainActivity extends AppCompatActivity {
         CalendarView calendarView = findViewById(R.id.calendarview);
         TextView text = findViewById(R.id.tampilkan);
         Button addActivity = findViewById(R.id.buttonadd);
+
+//        findViewById(R.id.HuaweiIdSignOutButton).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Task<Void> signOutTask = mAuthService.signOut();
+//            signOutTask.addOnSuccessListener(new OnSuccessListener<Void>() {
+//                @Override
+//                public void onSuccess(Void aVoid) {
+//                    Log.i(TAG, "signOut Success");
+//                    Intent intent = new Intent(MainActivity.this, QuickStartActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(Exception e) {
+//                    Log.i(TAG, "signOut fail");
+//                }
+//            });
+//        }
+//
+//        });
+
+
+        // Initialize the HUAWEI Ads SDK.
+        HwAds.init(this);
+
+        // Obtain BannerView based on the configuration in layout/ad_fragment.xml.
+        BannerView bottomBannerView = findViewById(R.id.hw_banner_view);
+        AdParam adParam = new AdParam.Builder().build();
+        bottomBannerView.loadAd(adParam);
+
+        // Call new BannerView(Context context) to create a BannerView class.
+//        BannerView topBannerView = new BannerView(this);
+//        topBannerView.setAdId("testw6vs28auh3");
+//        topBannerView.setBannerAdSize(BannerAdSize.BANNER_SIZE_SMART);
+//        topBannerView.loadAd(adParam);
+//
+//        RelativeLayout rootView = findViewById(R.id.root_view);
+//        rootView.addView(topBannerView);
+
+
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -63,6 +124,21 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+//        private void signOut() {
+//            Task<Void> signOutTask = mAuthService.signOut();
+//            signOutTask.addOnSuccessListener(new OnSuccessListener<Void>() {
+//                @Override
+//                public void onSuccess(Void aVoid) {
+//                    Log.i(TAG, "signOut Success");
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(Exception e) {
+//                    Log.i(TAG, "signOut fail");
+//                }
+//            });
+//        }
 
         Intent intent = this.getIntent();
 

@@ -15,8 +15,21 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+    signingConfigs {
+        config {
+            storeFile file('C:/Users/mulia/OneDrive/Documents/GitHub/App/test.jks')
+            storePassword '123456789'
+            keyPassword '123456789'
+            keyAlias 'Key0'
+        }
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+        }
         release {
+            signingConfig signingConfigs.config
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -35,4 +48,9 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation 'com.huawei.hms:hwid:6.0.1.300'
+    implementation 'com.huawei.hms:ads-lite:13.4.39.302'
+    implementation 'com.huawei.hms:ads-identifier:3.4.39.302'
+    implementation 'com.huawei.hms:ads-installreferrer:3.4.39.302'
 }
+apply plugin: 'com.huawei.agconnect'
