@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
@@ -22,20 +23,22 @@ public class input extends AppCompatActivity {
     EditText text1;
     int h = 0;
     int m = 0;
-
+    arrayClass arr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
         Intent intent = getIntent();
+        text1 = findViewById(R.id.kegiatan);
 
-        ArrayList<Remind> rem = new ArrayList<>();
+
 //        rem = arrayClass.getTimeSet();
 
         int date = intent.getIntExtra("day", 1);
         int month = intent.getIntExtra("month", 1);
         int year = intent.getIntExtra("year",1);
+
 
         String day = date + "-" + month + "-" + year;
         TextView dayText = findViewById(R.id.selectedDay);
@@ -47,19 +50,23 @@ public class input extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(text == null){
+                if(text == null||text1 == null){
                     Toast.makeText(input.this, "Set your reminder!", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Intent intent = new Intent(input.this, MainActivity.class);
-                    rem.add(new Remind(date, month, year, h, m));
-                    intent.putParcelableArrayListExtra("time", rem);
+
+                    arr.addTime(new Remind(text1.getText().toString(), date, month, year, h, m));
+
 //                    Remind rem = new Remind(date, month, year, h, m);
                     Toast.makeText(input.this, "Reminder added", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
+                    finish();
                 }
             }
         });
+
+
 
         //buat masukin jam ke edit text
         text = findViewById(R.id.times);

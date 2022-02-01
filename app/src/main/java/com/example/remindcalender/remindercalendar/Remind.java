@@ -3,30 +3,17 @@ package com.example.remindcalender.remindercalendar;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Remind implements Parcelable {
+public class Remind {
     private String activity;
     private int date, month, hour, minute,year;
 
-    protected Remind(Parcel in) {
-        activity = in.readString();
-        date = in.readInt();
-        month = in.readInt();
-        hour = in.readInt();
-        minute = in.readInt();
-        year = in.readInt();
+    public String getActivity() {
+        return activity;
     }
 
-    public static final Creator<Remind> CREATOR = new Creator<Remind>() {
-        @Override
-        public Remind createFromParcel(Parcel in) {
-            return new Remind(in);
-        }
-
-        @Override
-        public Remind[] newArray(int size) {
-            return new Remind[size];
-        }
-    };
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
 
     public int getDate() {
         return date;
@@ -68,7 +55,8 @@ public class Remind implements Parcelable {
         this.minute = minute;
     }
 
-    public Remind(int date, int month, int year, int hour, int minute) {
+    public Remind(String activity,int date, int month, int year, int hour, int minute) {
+        this.activity = activity;
         this.date = date;
         this.month = month;
         this.year = year;
@@ -76,18 +64,11 @@ public class Remind implements Parcelable {
         this.minute = minute;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public Remind(String activity, int hour, int minute) {
+        this.activity = activity;
+        this.hour = hour;
+        this.minute = minute;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeString(activity);
-        dest.writeInt(date);
-        dest.writeInt(month);
-        dest.writeInt(hour);
-        dest.writeInt(minute);
-        dest.writeInt(year);
-    }
+
 }

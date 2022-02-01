@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private int Daysindex;
     private int Monthsindex;
     private int Yearsindex;
+    arrayClass arr = new arrayClass();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,42 +31,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         CalendarView calendarView = findViewById(R.id.calendarview);
         TextView text = findViewById(R.id.tampilkan);
-
-        List<String> calendarlist =  new ArrayList<>();
-        int[] days = new int[31];
-        int[] months = new int[12];
-        int[] years = new int[10];
         Button addActivity = findViewById(R.id.buttonadd);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                currentYears = year;
-                currentMonths = month;
-                currentDays = dayOfMonth;
+                Log.e("OnSelectedDayChange", "User moved");
 
-                for (int i = 1; i<= 31; i++){
-                    if (days[i] == currentDays) {
-                        for (int j = 1; j <= 12; j++) {
-                            if (months[j] == currentMonths) {
-                                //print disini
-//                                text.setText();
-                                return;
-                            }
-                        }
-                    }
+                if (arr.isEmpty()) {
+                    Log.e("Main", "Array Empty");
+                    text.setText("");
+                } else if (arr.isEventExist(year, month + 1, dayOfMonth)) {
+                    Log.e("Main", "Event Exist");
+                    Remind data = arr.getTimeData(year, month + 1, dayOfMonth);
+
+                    text.setText("Event : " + data.getActivity() + " Time : " + data.getHour() + ":" + data.getMinute());
+                } else {
+                    Log.e("Main", "Event doesnt exist");
                 }
 
-            }
-        });
 
-        addActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                addActivity.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                    public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this , input.class);
                         intent.putExtra("day", dayOfMonth );
                         intent.putExtra("month", month+1);
@@ -75,15 +64,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Intent intent = this.getIntent();
-//        ArrayList<Remind> rem = (ArrayList<Remind>) intent.getParcelableArrayListExtra("time");
+        Intent intent = this.getIntent();
+
+
+//        if(!rem.isEmpty()) {
 ////        Remind rem = getIntent().getParcelableExtra("time");
 //
-//        String show = "Date : " + rem.getDate()
-//                +"\nMonth : " + rem.getMonth()
-//                +"\nYear : " + rem.getYear()
-//                +"\nTime: " + rem.getHour() + ":" + rem.getMinute();
+//        String show = "Date : " + rem.get(0);
+////                +"\nMonth : " + rem.getMonth()
+////                +"\nYear : " + rem.getYear()
+////                +"\nTime: " + rem.getHour() + ":" + rem.getMinute();
 //        text.setText(show);
-
+//        }
     }
 }
