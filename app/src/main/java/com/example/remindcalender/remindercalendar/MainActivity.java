@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -42,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 currentMonths = month;
                 currentDays = dayOfMonth;
 
-                for (int i = 0; i< 31; i++){
+                for (int i = 1; i<= 31; i++){
                     if (days[i] == currentDays) {
-                        for (int j = 0; j < 12; j++) {
+                        for (int j = 1; j <= 12; j++) {
                             if (months[j] == currentMonths) {
                                 //print disini
 //                                text.setText();
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-                text.setText("");
+
             }
         });
 
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                         Intent intent = new Intent(MainActivity.this , input.class);
                         intent.putExtra("day", dayOfMonth );
-                        intent.putExtra("month", month);
+                        intent.putExtra("month", month+1);
                         intent.putExtra("year", year);
                         startActivity(intent);
                     }
@@ -74,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        Intent intent = this.getIntent();
+//        ArrayList<Remind> rem = (ArrayList<Remind>) intent.getParcelableArrayListExtra("time");
+////        Remind rem = getIntent().getParcelableExtra("time");
+//
+//        String show = "Date : " + rem.getDate()
+//                +"\nMonth : " + rem.getMonth()
+//                +"\nYear : " + rem.getYear()
+//                +"\nTime: " + rem.getHour() + ":" + rem.getMinute();
+//        text.setText(show);
 
     }
 }

@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -19,6 +20,9 @@ public class input extends AppCompatActivity {
     TimePickerDialog picker;
     EditText text;
     EditText text1;
+    int h = 0;
+    int m = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,22 +30,32 @@ public class input extends AppCompatActivity {
         setContentView(R.layout.activity_input);
         Intent intent = getIntent();
 
-        ArrayList<Remind> timeSet = new ArrayList<>();
-        timeSet = arrayClass.getTimeSet();
-        int date = intent.getIntExtra("day", 0);
-        int month = intent.getIntExtra("month", 0);
-        int year = intent.getIntExtra("year",0);
+        ArrayList<Remind> rem = new ArrayList<>();
+//        rem = arrayClass.getTimeSet();
+
+        int date = intent.getIntExtra("day", 1);
+        int month = intent.getIntExtra("month", 1);
+        int year = intent.getIntExtra("year",1);
+
+        String day = date + "-" + month + "-" + year;
+        TextView dayText = findViewById(R.id.selectedDay);
+        dayText.setText(day);
+
 
         Button save = findViewById(R.id.savebtn);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(arrayClass.getTimeSet().isEmpty()){
+                if(text == null){
                     Toast.makeText(input.this, "Set your reminder!", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Intent intent = new Intent(input.this, output.class);
+                    Intent intent = new Intent(input.this, MainActivity.class);
+                    rem.add(new Remind(date, month, year, h, m));
+                    intent.putParcelableArrayListExtra("time", rem);
+//                    Remind rem = new Remind(date, month, year, h, m);
+                    Toast.makeText(input.this, "Reminder added", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 }
             }
@@ -61,16 +75,19 @@ public class input extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
+                                h = sHour;
+                                m = sMinute;
                                 text.setText(sHour + ":" + sMinute);
+
+
                             }
                         }, hour, minutes, true);
                 picker.show();
-                //lempar ke array kali?
-                Remind object = new Remind(date, month, year, hour, minutes);
-                arrayClass.getTimeSet().add(object);
-                Toast.makeText(input.this, "Reminder added", Toast.LENGTH_SHORT).show();
+
             }
         });
 
+
     }
+
 }
